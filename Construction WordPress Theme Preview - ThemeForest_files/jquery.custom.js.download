@@ -1,0 +1,135 @@
+var switcher_open = false;
+
+jQuery(document).ready(function () 
+{
+	"use strict";
+	
+	if (top.location != location) {
+	    top.location.href = document.location.href ;
+	}
+			
+	// jQuery(window).resize(function () 
+	// {
+		
+	// 	var preview_height = jQuery(window).height() - 60;
+				
+	// 	jQuery("#preview").height(preview_height);	
+		
+	// }).resize();
+	
+	jQuery("#purchase a").hover(function () 
+	{
+		
+		jQuery(this).stop().animate({backgroundColor: "#6f9a37"}, 400);
+		
+	}, function () 
+	{
+		
+		jQuery(this).stop().animate({backgroundColor: "#82b440"}, 400);		
+		
+	});
+	
+	jQuery("#switcher-button, #switcher-info").hover(function () 
+	{
+		
+		jQuery("#switcher-info").stop().animate({backgroundColor: "#323338"}, 400);
+		
+	}, function () 
+	{
+		
+		jQuery("#switcher-info").stop().animate({backgroundColor: "#242528"}, 400);		
+		
+	}).click(function () 
+	{
+		
+		if (switcher_open == true)
+		{
+			
+			jQuery("#switcher-select").stop().fadeOut();
+			
+			jQuery("#switcher-button").html('<i class="fa fa-chevron-down"></i>');
+			
+			switcher_open = false;
+			
+		} else {
+			
+			jQuery("#switcher-select").fadeIn();
+
+			jQuery("#switcher-button").html('<i class="fa fa-chevron-up"></i>');
+			
+			switcher_open = true;
+			
+		}
+		
+		return false;
+		
+	});	
+	
+	jQuery("#switcher-select li a").hover(function () 
+	{
+		
+		if (jQuery(this).attr("data-selected") != "true") jQuery(this).stop().animate({backgroundColor: "#111"}, 400);
+		
+	}, function () 
+	{
+		
+		if (jQuery(this).attr("data-selected") != "true") jQuery(this).stop().animate({backgroundColor: "#1a1b1d"}, 400);		
+		
+	}).click(function () 
+	{
+		
+		jQuery("#preview").attr("src", jQuery(this).attr("href"));
+		
+		jQuery("#purchase a").attr("href", jQuery(this).attr("data-themeforest"));
+		
+		jQuery("#purchase a").html('<i class="fa fa-shopping-cart"></i> <span class="label">Purchase ' + jQuery(this).find("h2").text() + " </span>");
+		
+		jQuery("#remove-frame a").attr("href", jQuery(this).attr("href"));
+		
+		jQuery("#switcher-button").click();
+		
+		jQuery("#switcher-info").html('<i class="fa fa-globe"></i> Viewing: ' + jQuery(this).find("h2").text());
+		
+		jQuery("#switcher-select li a").attr("data-selected", false);
+		
+		jQuery(this).attr("data-selected", true);
+		
+		jQuery("#switcher-select li a").each(function () 
+		{
+			
+			if (jQuery(this).attr("data-selected") != "true") 
+			{
+				
+				jQuery(this).stop().animate({backgroundColor: "#1a1b1d"}, 400);	
+								
+			}		
+			
+		});
+		
+		return false;
+		
+	}).each(function () 
+	{
+		
+		if (jQuery(this).attr("data-selected") == "true")
+		{
+			
+			jQuery(this).stop().animate({backgroundColor: "#111"}, 400);
+			
+		}
+		
+	});
+	
+	jQuery("#remove-frame a").hover(function () 
+	{
+		
+		jQuery(this).stop().animate({color: "#fff"}, 400);		
+		
+	}, function () 
+	{
+		
+		jQuery(this).stop().animate({color: "#999"}, 400);		
+		
+	});
+	
+});
